@@ -20,11 +20,15 @@ public class StorageService {
     private final Map<UUID, Article> articleM;
 
     //Конструктор
-    public StorageService(Map<UUID, Product> productM, Map<UUID, Article> articleM) {
+    public StorageService() {
 
-        this.productM = productM;
-        this.articleM = articleM;
+        this.productM = new HashMap<>();
+        this.articleM = new HashMap<>();
+
+        getSearchableMaps();
     }
+
+    //Map<UUID, Product> productM, Map<UUID, Article> articleM
 
     //Геттеры
     public Map<UUID, Product> getProductM() {
@@ -35,61 +39,48 @@ public class StorageService {
         return articleM;
     }
 
-    //Метод создания объекта класса
-//    @Bean
-    public StorageService storageService() {
-        return new StorageService(getProdMap(), getArtMap());
-    }
 
-
-    //Метод получения коллекции продуктов
-    private Map<UUID, Product> getProdMap() {
-        Map<UUID, Product> prodM = new HashMap<>();
+    //Метод заполнения коллекций полей значениями
+    private void getSearchableMaps() {
 
         UUID uuid = UUID.randomUUID();
-        prodM.put(uuid, new DiscountedProduct(uuid, "морковь", 50, 10));
+        this.productM.put(uuid, new DiscountedProduct(uuid, "морковь", 50, 10));
         uuid = UUID.randomUUID();
-        prodM.put(uuid, new FixPriceProduct(uuid, "рис"));
+        this.productM.put(uuid, new FixPriceProduct(uuid, "рис"));
         uuid = UUID.randomUUID();
-        prodM.put(uuid, new SimpleProduct(uuid, "хлеб", 45));
+        this.productM.put(uuid, new SimpleProduct(uuid, "хлеб", 45));
         uuid = UUID.randomUUID();
-        prodM.put(uuid, new SimpleProduct(uuid, "лук", 40));
+        this.productM.put(uuid, new SimpleProduct(uuid, "лук", 40));
         uuid = UUID.randomUUID();
-        prodM.put(uuid, new DiscountedProduct(uuid, "сахар", 70, 20));
+        this.productM.put(uuid, new DiscountedProduct(uuid, "сахар", 70, 20));
         uuid = UUID.randomUUID();
-        prodM.put(uuid, new SimpleProduct(uuid, "картофель", 65));
+        this.productM.put(uuid, new SimpleProduct(uuid, "картофель", 65));
         uuid = UUID.randomUUID();
-        prodM.put(uuid, new DiscountedProduct(uuid, "картофель", 65, 20));
+        this.productM.put(uuid, new DiscountedProduct(uuid, "картофель", 65, 20));
 
-        return prodM;
+        uuid = UUID.randomUUID();
+        this.articleM.put(uuid, (new Article(uuid, "хлеб", "История хлеба началась задолго до письменности")));
+        uuid = UUID.randomUUID();
+        this.articleM.put(uuid, (new Article(uuid, "рис", "В китайской культуре рис часто сравнивают с хлебом ")));
+        uuid = UUID.randomUUID();
+        this.articleM.put(uuid, (new Article(uuid, "сахар", "Пищевой продукт со сладким вкусом")));
+        uuid = UUID.randomUUID();
+        this.articleM.put(uuid, (new Article(uuid, "морковь", "Широко распространённая овощная культура")));
+        uuid = UUID.randomUUID();
+        this.articleM.put(uuid, (new Article(uuid, "картофель", "По пищевой ценности картофель  близок к хлебу")));
+        uuid = UUID.randomUUID();
+        this.articleM.put(uuid, (new Article(uuid, "фасоль", "Как источник растительного белка фасоль сравнивают с хлебом")));
     }
 
 
-    //Метод получения коллекции статей
-    private Map<UUID, Article> getArtMap() {
-        Map<UUID, Article> artM = new HashMap<>();
 
-        UUID uuid = UUID.randomUUID();
-        artM.put(uuid, (new Article(uuid, "хлеб", "История хлеба началась задолго до письменности")));
-        uuid = UUID.randomUUID();
-        artM.put(uuid, (new Article(uuid, "рис", "В китайской культуре рис часто сравнивают с хлебом ")));
-        uuid = UUID.randomUUID();
-        artM.put(uuid, (new Article(uuid, "сахар", "Пищевой продукт со сладким вкусом")));
-        uuid = UUID.randomUUID();
-        artM.put(uuid, (new Article(uuid, "морковь", "Широко распространённая овощная культура")));
-        uuid = UUID.randomUUID();
-        artM.put(uuid, (new Article(uuid, "картофель", "По пищевой ценности картофель  близок к хлебу")));
-        uuid = UUID.randomUUID();
-        artM.put(uuid, (new Article(uuid, "фасоль", "Как источник растительного белка фасоль сравнивают с хлебом")));
-
-        return artM;
-    }
 
     public Set<Searchable> getSearchable() {
+        //getSearchableMaps();
         Set<Searchable> searchables = new HashSet<>();
 
-        searchables.addAll(storageService().getArticleM().values());
-        searchables.addAll(storageService().getProductM().values());
+        searchables.addAll(this.getArticleM().values());
+        searchables.addAll(this.getProductM().values());
 
         return searchables;
     }

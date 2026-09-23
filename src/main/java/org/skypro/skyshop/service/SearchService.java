@@ -1,13 +1,11 @@
 package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.search.Searchable;
-import org.skypro.skyshop.model.searchresult.SearchResult;
+import org.skypro.skyshop.model.search.SearchResult;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,9 +22,9 @@ public class SearchService {
         Set<Searchable> searchables = storageService.getSearchable();
 
         return searchables.stream()
-                .filter(searchable -> searchable != null && (searchable.getSearchTerm()).contains(searchTerm) )
+                .filter(searchable -> searchable != null && (searchable.getSearchTerm()).toLowerCase().contains(searchTerm.toLowerCase()) )
                 .map((SearchResult::fromSearchable))
                 .collect(Collectors.toCollection(HashSet::new));
     }
-        //HashSet
+
 }

@@ -1,7 +1,4 @@
-package org.skypro.skyshop.model.searchresult;
-
-import org.skypro.skyshop.model.search.Searchable;
-import org.springframework.stereotype.Service;
+package org.skypro.skyshop.model.search;
 
 import java.util.UUID;
 
