@@ -23,7 +23,7 @@ public class BasketService {
     }
 
     public void addProdById(UUID id) {
-        storageService.getProductById(id).orElseThrow(() -> new IllegalArgumentException("Данный продукт отсутствует"));
+        storageService.getProductById(id).orElseThrow(NoSuchProductException::new);
         productBasket.addProduct(id);
     }
 
@@ -35,7 +35,7 @@ public class BasketService {
         return prodBasket.entrySet().stream()
                 .map(entry -> {
                     Product product = storageService.getProductById(entry.getKey())
-                            .orElseThrow(() -> new IllegalArgumentException("Данный продукт отсутствует"));
+                            .orElseThrow(NoSuchProductException::new);
                     return new BasketItem(product, entry.getValue());
                 })
                 .collect(Collectors.toList());
