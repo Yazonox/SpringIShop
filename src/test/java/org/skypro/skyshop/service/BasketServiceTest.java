@@ -63,8 +63,8 @@ public class BasketServiceTest {
         Mockito.when(storageService.getProductById(id1)).thenReturn(Optional.of(product));
         userBasket = new UserBasket(basketService.getUserBasket());
 
-        assertThat(userBasket.getBasketItems());
-        assertThat(userBasket.getTotal());
+        assertThat(userBasket.getBasketItems()).isNotEmpty();
+        assertThat(userBasket.getTotal()).isEqualTo(45);
 
     }
 
